@@ -1,0 +1,32 @@
+# Python
+venv/
+backend/venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Node
+node_modules/
+.next/
+out/
+dist/
+build/
+
+# Environment files
+.env
+.env.*
+.env.local
+
+# FFmpeg / binaries
+ffmpeg-*
+*.exe
+*.dll
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

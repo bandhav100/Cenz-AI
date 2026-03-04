@@ -10,3 +10,7 @@ easyocr==1.7.1
 pydantic==2.5.2
 python-jose==3.3.0
 aiofiles==23.2.1
+
+blis==0.7.11
+thinc==8.2.2
+numpy==1.26.4

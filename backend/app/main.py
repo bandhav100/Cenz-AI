@@ -10,6 +10,48 @@ from fastapi.middleware.cors import CORSMiddleware
 import logging
 import time
 
+import spacy
+
+# spaCy NLP model singleton
+nlp = None
+
+def get_nlp():
+    """Lazily load and return the spaCy NLP model.
+
+    This avoids the cost of loading on import and allows the model to
+    be initialized when first needed (e.g. during request handling).
+    """
+    global nlp
+    if nlp is None:
+        nlp = spacy.load("en_core_web_sm")
+    return nlp
+
+
+def process_text(text: str):
+    """Convenience wrapper that runs the spaCy model on a string.
+
+    This mirrors the common pattern `get_nlp()(text)` described in
+    documentation and reduces boilerplate elsewhere in the codebase.
+    """
+    return get_nlp()(text)
+
+
+# EasyOCR reader singleton
+reader = None
+
+def get_reader():
+    """Lazily initialize and return an EasyOCR Reader instance.
+
+    The import is done inside the function to avoid requiring EasyOCR at
+    module import time; the reader is cached in a global variable once
+    created.
+    """
+    global reader
+    if reader is None:
+        import easyocr
+        reader = easyocr.Reader(['en'])
+    return reader
+
 from app.routers import redaction
 
 # Configure logging
@@ -30,7 +72,7 @@ app = FastAPI(
 
     An AI-driven PII redaction system that combines:
     - **Regex Pattern Engine** for structured identifiers
-    - **NLP (spaCy NER)** for contextual entity detection
+    - **NLP (spaCy NER)** for contextual entity detection (access via `get_nlp()(text)`)
     - **OCR Pipeline** for image/PDF processing
     - **Multiple Redaction Strategies**: masking, tagging, anonymization, hashing
 

@@ -2,7 +2,7 @@
 
 import { useState, useRef, useCallback, useEffect } from "react";
 
-const API_BASE = "http://localhost:8000/api/v1";
+const API_BASE = `${process.env.NEXT_PUBLIC_API_URL}/api/v1`;
 
 /* ── Sample data ─────────────────────────── */
 const SAMPLE_TEXTS = [
@@ -1081,7 +1081,7 @@ export default function Home() {
                         <div className="section-card" style={{ marginBottom: 20 }}>
                             <div className="section-header">
                                 <div className="section-title" style={{ fontSize: 14 }}>📡 REST API Reference</div>
-                                <a href="http://localhost:8000/docs" target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm">Swagger UI ↗</a>
+                                <a href={`${process.env.NEXT_PUBLIC_API_URL}/docs`} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm">Swagger UI ↗</a>
                             </div>
                             <div>
                                 {[
